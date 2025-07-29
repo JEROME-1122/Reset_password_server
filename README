@@ -1,0 +1,52 @@
+//sever 
+
+Step 1 - First install the packages express, cors, mongoose, dotenv, jsonwebtoken, nodemailer, bcryptjs, cookie-parser
+
+Step 2 - Then create index.js file import userModels from "./models/userModels"
+import express cors and cookie-parser 
+
+Step 3 - Then add the root pathe application.get("/"), then  the port assign in one constant server port or 3000 and we  add the port in app.listen 
+
+Step 4 - Then create the database connection  creating config folder create the mongodb.js . here we import the mongoose and here we use the async fucntion because add try add catch block if the database connect try block working if not connected catch block execute . in try block create the mongoose connect . we are using the mongodb cluster so we have passwrod so save the link into the .env file and get the link process.env.DB_LINK 
+
+Step 5 - Create the models folder for creating schema  creating the schema and here we add name , email password , then verification we addthe sendVerifyOtp, verifyOtpExpireAt(for expires), isAccountVerified , then resetOtp, resetOtpExpireAt, export the modles 
+
+Step 6 - Create controller folder for creating the resgiter login logout verification 
+             first registration before import jsonwebtoken , bcryptjs and userModels
+             registration we add the async function first declear the name , email, password fromt the user giver requestAnimationFrame.body . we add the condition if not add email or password or name showing the erro and go t catch block if we enter the detail then we check the user is already register or not find by email if not resigter 
+             has the password because for the security purpose  then save the user details. then generate the token using jsonwebtoken. and we store the token value in cookie part and for 7 days .
+
+Step 7 - Then login async function first find the email is the email is not found showing the error message if user fount then check given passoword and hased password same or not using bcrypt.compare. if it match then logon the process . not go the catch block ;
+                if the user resgiter we send the respose mailer using the nodemail  so creat the niodemailer.js in cofig folder . here we using BeforeUnloadEvent.com for sending the respose email creat the tranpost and add the host port auth in auth user and passwprd and export the moodule  (in safety we use the username and password in .env file ) 
+                . then after the cookie part creathe the constant mailOption and here we add from to subject and text then if worked go to the wait transporter.sendMail(mailoption ).BeforeUnloadEvent
+
+
+Step 8 - Then logout async function  and clear the token in cookie section .
+
+Step 9 - Then verify the email to send the opt if the otp 6 digit otp in try block fisrt we dfind the user if . we decleare the isAccountverifed in scehma if alrady verified show the false message if not verified then genrate the random otp stote in vetrifed top  add the timer limit t=for the otp and save into the database . we send the same generate optm in mail using nodemailer .
+                
+Step 10 - Then  verify if the otp revied and enter otp is correct or not (in verifyEmail) so in trry block first find the userid from the databse if the usergived otp and datavae otp is not same show the false error then checking the expire time if not show the error message if ee=verything correct isAccountVerified change into true and verifyOtp empty  verifyOtpExpireAt is zero and save in to the database and send the respose message  
+
+Step 11 - If the user forgot the password can provide the reset option first we request the reset otp based on the email . if the user enter the email first check if the email already regiter or not is not register show the error if user already register send the otp what email they gived and set the otp expire 1 day and save the user data in database.
+                and use the nodemailerto send the email if the error show the catch block 
+
+
+Step 12 -  Then reset Password . create the resetPassword async function here we post 3 value email, otp, and news passwprd if anything we not wenter showing the error using if statment . then try block fethch the email if ther email already not registre shwoing the error nessage if user is registered already then check the enter otp and given otp in mail if the otp is correct then check the expire . if the otp send more than one day it show error . if eveything correct tthen hash the new passowrd and save into the database and show the respose if not working then go to catch block .
+
+Step 13 - export all the component module.exports={controllerfunction,...}
+
+
+Step 14 - Create the middleware folder in middleware create userAuth.js .. Here we write the middle ware funtion if the function successfull then do next function. here we get the token from the cookies and if the token not available show the message please login . if the user login then vverify the token . if the token id and user id is eyal then next() passsd otherwise show the error . if the try block not success then catch block executed  
+
+Step 15 - Creating the router folder in the router folger create the authroute.js. import the express router . and get all the function from the authContoller.js . and add the get and post method each functionality .
+                example router.post("/path", contoller function). (register,login.logout.sendVerifyOtp, verifyEmail,sendResetOtp, resetPassword) these are post methos and isAuthenticateed is get method. 
+                in the sendVerifyOtp,verifyEmail,userAuth we passs the middleware function becasue chefking the token if avalible or not .
+
+Step 16 - Then if we want to get the user details creat the userControoler in contoller folder. find the user by user id . if the user id is not show the error message and if user available the get he name ... what details we want . if the  try block not executed then execute the cath block . create the router for userdetails this is get method . with middleware 
+
+Strp 17 -  Add the both router in index.js 
+
+Step 18 - And allow the frontend page value using allowedOringing=["frontend_url"]; pass the value fro the frontend 
+
+
+
