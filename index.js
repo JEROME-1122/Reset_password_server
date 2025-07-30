@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 connectDB();
 
 
-const allowedOrigins=['https://reset-pass-wo-rd.netlify.app/',]
+const allowedOrigins=['https://reset-pass-wo-rd.netlify.app',]
 app.use(express.json());
 app.use(cookieParser());
 app.use(
